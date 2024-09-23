@@ -224,7 +224,6 @@ def get_metrics():
     metrics['disk_total'] = statvfs.f_blocks * statvfs.f_frsize // 1024  # в kB
 
     return metrics
-
 Запись метрик в файл
 def log_metrics():
     metrics = get_metrics()
@@ -233,7 +232,6 @@ def log_metrics():
 
 if __name__ == '__main__':
     log_metrics()
-
 '''
 
 

@@ -173,12 +173,67 @@ _____
 Python script
 
 '''
- # 1. Загрузка процессора (метрика из /proc/loadavg)
+!/usr/bin/env python3
+import time
+import json
+import os
+
+Путь для логирования
+log_dir = '/var/log'
+log_file = time.strftime('%Y-%m-%d') + '-awesome-monitoring.log'
+log_path = os.path.join(log_dir, log_file)
+
+Функция для получения метрик из /proc
+def get_metrics():
+    metrics = {}
+    
+    Временная метка
+    metrics['timestamp'] = int(time.time())
+    
+    Загрузка процессора (метрика из /proc/loadavg)
     with open('/proc/loadavg', 'r') as f:
         loadavg = f.read().split()
         metrics['loadavg_1min'] = float(loadavg[0])
         metrics['loadavg_5min'] = float(loadavg[1])
         metrics['loadavg_15min'] = float(loadavg[2])
+    
+    Использование памяти (метрика из /proc/meminfo)
+    with open('/proc/meminfo', 'r') as f:
+        meminfo = {}
+        for line in f:
+            key, value = line.split(':')
+            meminfo[key] = int(value.split()[0])  
+        metrics['mem_total'] = meminfo['MemTotal']
+        metrics['mem_free'] = meminfo['MemFree']
+        metrics['mem_available'] = meminfo['MemAvailable']
+    
+    Использование CPU (метрика из /proc/stat)
+    with open('/proc/stat', 'r') as f:
+        for line in f:
+            if line.startswith('cpu '):
+                cpu_fields = [int(x) for x in line.strip().split()[1:]]
+                idle_time = cpu_fields[3]  # idle time
+                total_time = sum(cpu_fields)
+                metrics['cpu_idle'] = idle_time
+                metrics['cpu_total'] = total_time
+                break
+    
+    Использование диска (метрика из os.statvfs для корневой директории)
+    statvfs = os.statvfs('/')
+    metrics['disk_free'] = statvfs.f_bfree * statvfs.f_frsize // 1024  # в kB
+    metrics['disk_total'] = statvfs.f_blocks * statvfs.f_frsize // 1024  # в kB
+
+    return metrics
+
+Запись метрик в файл
+def log_metrics():
+    metrics = get_metrics()
+    with open(log_path, 'a') as f:
+        f.write(json.dumps(metrics) + '\n')
+
+if __name__ == '__main__':
+    log_metrics()
+
 '''
 
 

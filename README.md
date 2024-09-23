@@ -235,9 +235,7 @@ if __name__ == '__main__':
 
 **CRON расписание**
 
-'''
 * * * * * /usr/bin/python3 /home/ansible/script.py
-'''
 
 **LOG**
 

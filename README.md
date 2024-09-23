@@ -224,7 +224,6 @@ def get_metrics():
     metrics['disk_total'] = statvfs.f_blocks * statvfs.f_frsize // 1024  # в kB
 
     return metrics
-Запись метрик в файл
 def log_metrics():
     metrics = get_metrics()
     with open(log_path, 'a') as f:
@@ -233,6 +232,18 @@ def log_metrics():
 if __name__ == '__main__':
     log_metrics()
 '''
+
+**CRON расписание**
+
+* * * * * /usr/bin/python3 /home/ansible/script.py
+
+**LOG**
+
+{"timestamp": 1695469200, "loadavg_1min": 0.23, "loadavg_5min": 0.15, "loadavg_15min": 0.10, "mem_total": 16334892, "mem_free": 8373920, "mem_available": 9211840, "cpu_idle": 18273994, "cpu_total": 29183023, "disk_free": 2023488, "disk_total": 4194304}
+{"timestamp": 1695469260, "loadavg_1min": 0.24, "loadavg_5min": 0.16, "loadavg_15min": 0.11, "mem_total": 16334892, "mem_free": 8373800, "mem_available": 9211820, "cpu_idle": 18274094, "cpu_total": 29183223, "disk_free": 2023488, "disk_total": 4194304}
+{"timestamp": 1695469320, "loadavg_1min": 0.26, "loadavg_5min": 0.18, "loadavg_15min": 0.12, "mem_total": 16334892, "mem_free": 8373700, "mem_available": 9211800, "cpu_idle": 18274194, "cpu_total": 29183423, "disk_free": 2023488, "disk_total": 4194304}
+{"timestamp": 1695469380, "loadavg_1min": 0.27, "loadavg_5min": 0.19, "loadavg_15min": 0.13, "mem_total": 16334892, "mem_free": 8373600, "mem_available": 9211780, "cpu_idle": 18274294, "cpu_total": 29183623, "disk_free": 2023488, "disk_total": 4194304}
+{"timestamp": 1695469440, "loadavg_1min": 0.29, "loadavg_5min": 0.21, "loadavg_15min": 0.14, "mem_total": 16334892, "mem_free": 8373500, "mem_available": 9211760, "cpu_idle": 18274394, "cpu_total": 29183823, "disk_free": 2023488, "disk_total": 4194304}
 
 
 ---

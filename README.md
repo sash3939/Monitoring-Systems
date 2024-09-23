@@ -256,6 +256,10 @@ Uptime
   endpoint = "unix:///var/run/docker.sock"
 ```
 
+<img width="545" alt="Telegraf-conf" src="https://github.com/user-attachments/assets/d5f005c8-2f74-423c-b29b-83ef2e4d1907">
+
+
+
 Дополнительно вам может потребоваться донастройка контейнера telegraf в `docker-compose.yml` дополнительного volume и 
 режима privileged:
 ```

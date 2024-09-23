@@ -225,6 +225,7 @@ _Минусы_:
 P.S.: если при запуске некоторые контейнеры будут падать с ошибкой - проставьте им режим `Z`, например
 `./data:/var/lib:Z`
 
+<img width="643" alt="Screen Chronograf" src="https://github.com/user-attachments/assets/8c15c753-4916-454c-8f82-2bbde9ac767a">
 
 
 
